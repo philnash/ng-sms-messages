@@ -24,9 +24,10 @@
               "src/manifest.json"
             ],
             "styles": [
+              "src/assets/css/material.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["src/assets/js/material.min.js"]
           },
           "configurations": {
             "production": {
@@ -74,6 +75,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              "src/assets/css/material.min.css",
               "src/styles.css"
             ],
             "scripts": [],

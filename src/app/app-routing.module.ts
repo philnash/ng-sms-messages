@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MessageListComponent } from './message-list/message-list.component';
+import { NewMessageComponent } from './new-message/new-message.component';
 
 const routes: Routes = [
   { path: '', component: MessageListComponent, data: { box: 'inbox' } },
-  { path: 'outbox', component: MessageListComponent, data: { box: 'outbox' } }
+  { path: 'outbox', component: MessageListComponent, data: { box: 'outbox' } },
+  { path: 'messages/new', component: NewMessageComponent }
 ]
 
 @NgModule({

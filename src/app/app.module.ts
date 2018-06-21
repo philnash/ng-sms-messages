@@ -8,12 +8,14 @@ import { MessageListComponent } from './message-list/message-list.component';
 import { HttpModule } from '@angular/http';
 import { MessageComponent } from './message/message.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NewMessageComponent } from './new-message/new-message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessageListComponent,
-    MessageComponent
+    MessageComponent,
+    NewMessageComponent
   ],
   imports: [
     BrowserModule,

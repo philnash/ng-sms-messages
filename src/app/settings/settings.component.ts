@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { Http } from '@angular/http';
 import { environment } from '../../environments/environment';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-settings',
@@ -34,10 +33,8 @@ export class SettingsComponent implements OnInit {
       this.swPush.requestSubscription({
         serverPublicKey: environment.webPushPublicKey
       }).then(subscription => {
-        // this.pushSubscription = subscription;
         return this.http.post('/api/subscription', subscription.toJSON()).toPromise();
       }).then(result => {
-        // this.pushEnabled = true;
         console.log(result);
       })
     }

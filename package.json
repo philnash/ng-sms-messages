@@ -30,6 +30,7 @@
     "object.values": "^1.0.4",
     "rxjs": "^6.0.0",
     "twilio": "^3.17.3",
+    "web-push": "^3.3.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

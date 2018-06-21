@@ -6,10 +6,14 @@ const router = express.Router();
 const twilio = require('twilio');
 const values = require('object.values');
 
+const webPush = require('web-push');
+
 // application requires
 const config = require("../config");
 
 const client = twilio(config.accountSid, config.authToken);
+
+let pushSubscription;
 
 router.get("/inbox", function(req, res, next) {
   client.messages.list({to: config.phoneNumber}).then(function(messages) {
@@ -84,6 +88,44 @@ router.get("/messages/:phoneNumber", function(req, res, next) {
       phoneNumber: req.params.phoneNumber
     }));
   });
+});
+
+router.post("/subscription", function(req, res, next) {
+  if(Object.keys(req.body).length === 0) {
+    pushSubscription = null;
+  } else {
+    pushSubscription = req.body;
+  }
+  res.status(200);
+  res.send();
+});
+
+router.post("/webhooks/message", function(req, res, next) {
+  console.log(req.body.From, req.body.Body);
+  try {
+    const data = JSON.stringify({
+      notification: {
+        title: `New message from ${req.body.From}`,
+        body: req.body.Body
+      }
+    });
+    const options = {
+      vapidDetails: {
+        subject: 'mailto:philnash@twilio.com',
+        publicKey: process.env.WEB_PUSH_PUBLIC_KEY,
+        privateKey: process.env.WEB_PUSH_PRIVATE_KEY
+      }
+    }
+    if (pushSubscription) {
+      webPush.sendNotification(pushSubscription, data, options)
+        .then(yay => console.log(yay))
+        .catch(err => console.error(err));
+    }
+  } catch(error) {
+    console.error(error);
+  }
+  res.set('Content-Type', 'application/xml');
+  res.send("<Response/>");
 });
 
 module.exports = router;

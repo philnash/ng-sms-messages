@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev": "concurrently \"ng serve --proxy-config server.conf.json\" \"nodemon server.js\""
+    "dev": "concurrently \"ng serve --proxy-config server.conf.json\" \"npm run server\"",
+    "server": "ng build --prod && nodemon server"
   },
   "private": true,
   "dependencies": {

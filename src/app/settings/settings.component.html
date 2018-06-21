@@ -1,0 +1,13 @@
+<div class="mdl-cell mdl-cell--12-col mdl-cell--2-col-tablet mdl-cell--12-col-phone">
+  <h2>Settings</h2>
+
+  <p>This application can send you push notifications when you receive messages.</p>
+
+  <button *ngIf="!pushEnabled" (click)="onActivatePush()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect full-width">
+    Subscribe to push notifications
+  </button>
+
+  <button *ngIf="pushEnabled" (click)="onUnsubscribePush()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect full-width">
+    Unsubscribe from push notifications
+  </button>
+</div>

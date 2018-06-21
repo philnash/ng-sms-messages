@@ -11,6 +11,7 @@ import { MessageComponent } from './message/message.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { ConversationComponent } from './conversation/conversation.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ConversationComponent } from './conversation/conversation.component';
     MessageListComponent,
     MessageComponent,
     NewMessageComponent,
-    ConversationComponent
+    ConversationComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,6 @@ export class MessageListComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.messageService.getMessages(data['box']).subscribe((res) => {
         this.messages = res;
-        console.log(this.messages);
         this.loaded = true;
       });
     });

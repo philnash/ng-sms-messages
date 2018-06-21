@@ -31,7 +31,6 @@ export class ConversationComponent implements OnInit {
     this.messageService.getConversation(this.phoneNumber)
     .subscribe(messages => {
       this.messages = messages;
-      console.log(this.messages);
     })
   }
 }

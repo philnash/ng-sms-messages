@@ -9,8 +9,8 @@ import { Message } from './models/message.model';
 export class MessageService {
   constructor(private http: Http) { }
 
-  getInbox() {
-    return this.http.get('/api/inbox')
+  getMessages(inOrOut: string) {
+    return this.http.get(`/api/${inOrOut}`)
       .pipe(
         map(res => res.json())
       ).pipe(

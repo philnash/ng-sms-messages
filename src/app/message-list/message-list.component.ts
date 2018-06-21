@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from '../message.service';
-import { resolve } from 'q';
+import { Message } from '../models/message.model';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-message-list',
@@ -8,16 +10,21 @@ import { resolve } from 'q';
   styleUrls: ['./message-list.component.css']
 })
 export class MessageListComponent implements OnInit {
-  messages = [];
+  messages: Message[] = [];
   loaded = false;
-  constructor(private messageService: MessageService) { }
+
+  constructor(
+    private messageService: MessageService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.messageService.getInbox().subscribe((res) => {
-      this.messages = res;
-      console.log(this.messages);
-      this.loaded = true;
-    });
+    this.route.data.subscribe((data) => {
+      this.messageService.getMessages(data['box']).subscribe((res) => {
+        this.messages = res;
+        console.log(this.messages);
+        this.loaded = true;
+      });
+    }
   }
-
 }

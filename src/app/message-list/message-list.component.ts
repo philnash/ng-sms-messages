@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MessageService } from '../message.service';
 import { Message } from '../models/message.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-message-list',
@@ -25,6 +24,6 @@ export class MessageListComponent implements OnInit {
         console.log(this.messages);
         this.loaded = true;
       });
-    }
+    });
   }
 }

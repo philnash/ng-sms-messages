@@ -1,0 +1,52 @@
+patch-package
+--- a/node_modules/@angular/service-worker/ngsw-worker.js
++++ b/node_modules/@angular/service-worker/ngsw-worker.js
+@@ -1,6 +1,6 @@
+ (function () {
+ 'use strict';
+-
++importScripts('./assets/js/idb.js');
+ /**
+  * @license
+  * Copyright Google Inc. All Rights Reserved.
+@@ -1849,6 +1849,7 @@ class Driver {
+         this.scope.addEventListener('fetch', (event) => this.onFetch(event));
+         this.scope.addEventListener('message', (event) => this.onMessage(event));
+         this.scope.addEventListener('push', (event) => this.onPush(event));
++        this.scope.addEventListener('sync', (event) => this.onSync(event));
+         // The debugger generates debug pages in response to debugging requests.
+         this.debugger = new DebugHandler(this, this.adapter);
+         // The IdleScheduler will execute idle tasks after a given delay.
+@@ -1969,6 +1970,32 @@ class Driver {
+             yield this.scope.registration.showNotification(desc['title'], options);
+         });
+     }
++    onSync(event) {
++      console.log('Sync event');
++      let db;
++      event.waitUntil(
++        idb.open('outbox-store', 1, upgradeDb => {
++          upgradeDb.createObjectStore('outbox');
++        }).then(database => {
++          db = database;
++          const tx = db.transaction('outbox', 'readonly');
++          return tx.objectStore('outbox').getAll();
++        }).then(messages => {
++          return Promise.all(messages.map(message => {
++            return fetch('/api/messages', {
++              method: 'POST',
++              body: JSON.stringify(message),
++              headers: {
++                'Content-Type': 'application/json'
++              }
++            }).then(() => {
++              const tx = db.transaction('outbox', 'readwrite');
++              return tx.objectStore('outbox').delete(message.id);
++            });
++          }))
++        })
++      )
++    }
+     reportStatus(client, promise, nonce) {
+         return __awaiter(this, void 0, void 0, function* () {
+             const response = { type: 'STATUS', nonce, status: true };

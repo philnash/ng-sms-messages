@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, EventEmitter, Output } from '@angu
 import { NgForm } from '@angular/forms';
 import { MessageService } from '../message.service';
 import { Router } from '@angular/router';
+import { MessageStoreService } from '../message-store.service';
 
 @Component({
   selector: 'app-new-message',
@@ -15,7 +16,8 @@ export class NewMessageComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private messageStore: MessageStoreService
   ) { }
 
   ngOnInit() {
@@ -28,7 +30,12 @@ export class NewMessageComponent implements OnInit {
       this.form.reset();
       this.send.emit();
       this.router.navigateByUrl(`/messages/${phoneNumber}`);
-    });
+    },
+  error => {
+    this.form.reset();
+    this.send.emit();
+    this.router.navigateByUrl(`/messages/${phoneNumber}`);
+  });
   }
 
 }

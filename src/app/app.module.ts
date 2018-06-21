@@ -6,11 +6,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MessageListComponent } from './message-list/message-list.component';
 import { HttpModule } from '@angular/http';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessageListComponent
+    MessageListComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

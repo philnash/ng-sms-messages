@@ -1,5 +1,5 @@
 <ul class="mdl-list contact-messages" *ngIf="loaded">
-  <li>hello</li>
+  <app-message *ngFor="let message of messages;let even = even" [message]="message" [className]="even ? 'even' : 'odd'"></app-message>
 </ul>
 
 <p *ngIf="!loaded">Loading messages</p>

@@ -17,4 +17,14 @@ export class MessageService {
         map(objs => objs.map(obj => new Message(obj)))
       );
   }
+
+  getConversation(phoneNumber: string) {
+    console.log(phoneNumber);
+    return this.http.get(`/api/messages/${phoneNumber}`)
+      .pipe(
+        map(res => res.json())
+      ).pipe(
+        map(obj => obj.messages.map(obj => new Message(obj)))
+      );
+  }
 }

@@ -80,7 +80,7 @@ router.get("/messages/:phoneNumber", function(req, res, next) {
     });
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({
-      messages: messages,
+      messages: allMessages,
       phoneNumber: req.params.phoneNumber
     }));
   });

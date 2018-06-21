@@ -8,8 +8,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+<<<<<<< HEAD
     "dev": "concurrently \"ng serve --proxy-config server.conf.json\" \"npm run server\"",
     "server": "ng build --prod && nodemon server"
+=======
+    "dev": "concurrently \"ng serve --proxy-config server.conf.json\" \"nodemon server.js\"",
+    "prepare": "patch-package",
+    "server": "ng build --prod && nodemon server"
+>>>>>>> background-sync
   },
   "private": true,
   "dependencies": {
@@ -27,6 +33,7 @@
     "body-parser": "^1.18.3",
     "core-js": "^2.5.4",
     "express": "^4.16.3",
+    "idb": "^2.1.2",
     "morgan": "^1.9.0",
     "object.values": "^1.0.4",
     "rxjs": "^6.0.0",
@@ -53,6 +60,7 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "nodemon": "^1.17.5",
+    "patch-package": "^5.1.1",
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",

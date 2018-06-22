@@ -101,7 +101,6 @@ router.post("/subscription", function(req, res, next) {
 });
 
 router.post("/webhooks/message", function(req, res, next) {
-  console.log(req.body.From, req.body.Body);
   try {
     const data = JSON.stringify({
       notification: {

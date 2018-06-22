@@ -1,27 +1,58 @@
-# NgSmsMessages
+# Web, Twilio and Service Worker powered SMS Messages app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+This is an implementation of an SMS Messages app that you can use with a [Twilio](https://twilio.com) number, with a front end built with Angular 6, enhanced with Service Worker features.
 
-## Development server
+This was the demo application used at Angular Conf Melbourne, for the talk [Service Worker - Beyond the cache](https://speakerdeck.com/philnash/service-workers-beyond-the-cache-angular-conf-australia).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Important code
 
-## Code scaffolding
+### Push Notifications
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Check out the `settings.component.ts` for registering and unregistering for Push Notifications with the `swPush` service.
 
-## Build
+For sending Push Notifications, take a look at `server/routes/index.js`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Background Sync
 
-## Running unit tests
+Check out the `message.service.ts` for registering for a sync event. And, once you have run `npm install` then `patch-package` will have updated `./node_modules/@angular/service-worker/ngsw-worker.js`. Or you can just look at the patch in `./patches/@angular/service-worker+6.0.5.patch`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Running the application
 
-## Running end-to-end tests
+Clone the repository and install dependencies:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```bash
+$ git clone https://github.com/philnash/ng-sms-messages.git
+$ cd ng-sms-messages
+$ npm install
+```
 
-## Further help
+Copy `.env.example` to `.env` and fill in the your Twilio account credentials and the Twilio number you want to use. You can find your Account SID and Auth Token in your [Twilio account portal](https://www.twilio.com/user/account).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+$ cp .env.example .env
+```
+
+You also need to generate VAPID keys for your application. You can do so with:
+
+```bash
+$ npx web-push generate-vapid-keys
+```
+
+Add the public key to your `src/environment.prod.ts` file.
+
+Then start the application. You can run it in development mode with
+
+```bash
+$ npm run dev
+```
+
+This will start the front end on [http://localhost:4200](http://localhost:4200)
+
+To use the service worker functionality, you need to create a production build and serve it. The script to perform this is:
+
+```bash
+$ npm run server
+```
+
+Navigate to [http://localhost:3000](http://localhost:3000) and you will see the application.
+
